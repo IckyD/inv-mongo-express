@@ -1,0 +1,16 @@
+{
+  "name": "inv-mongo-express",
+  "version": "1.0.0",
+  "description": "An inventory system API, created using the help of Express.js and MongoDB",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node --env-file=.env src/main.js"
+  },
+  "author": "Icky",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.3"
+  }
+}
