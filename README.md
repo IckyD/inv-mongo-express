@@ -80,3 +80,6 @@ Contributions are welcome! Please open an issue or submit a pull request with an
 
 ## 📄 License
 This project is licensed under the MIT License.
+
+#### Closing thoughts
+Thank you [SanelRyan](https://github.com/SanelRyan/) for this project idea and pls give me 5 stars⭐
