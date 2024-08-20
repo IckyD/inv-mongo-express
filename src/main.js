@@ -5,28 +5,31 @@ const mongoose = require('mongoose')
 
 const Item = require('./items/schema.js')
 
-connectDatabase();
+connectDatabase()
 
 const server = express();
 server.use(express.json())
 
 server.post('/api/items/add', async (req, res) => {
-    console.log('Request Body:', req.body);
     try {
         const newItem = new Item(req.body);
         const savedItem = await newItem.save();
         res.status(201).json(savedItem);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({
+            message: err.message
+        });
     }
 });
 
 server.get('/api/items', async (req, res) => {
     try {
-        const items = await Item.find();
+        const items = await Item.find(); // returns [*items]
         res.status(200).json(items);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({
+            message: err.message
+        });
     }
 });
 
@@ -35,21 +38,32 @@ server.get('/api/items/find/:id', async (req, res) => {
         const itemId = req.params.id;
 
         if (!mongoose.Types.ObjectId.isValid(itemId)) {
-            return res.status(400).json({ message: 'Invalid item ID format' });
+            return res.status(400).json({
+                message: 'Invalid item ID format'
+            });
         }
         const item = await Item.findById(itemId);
         if (!item) {
-            return res.status(404).json({ message: 'Item not found' });
+            return res.status(404).json({
+                message: 'Item not found'
+            });
         }
         res.status(200).json(item);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({
+            message: err.message
+        });
     }
 });
 
 server.get('/api/items/search', async (req, res) => {
     try {
-        const { name, category, minPrice, maxPrice } = req.query;
+        const {
+            name,
+            category,
+            minPrice,
+            maxPrice
+        } = req.query;
         const query = {};
         if (name) {
             query.name = new RegExp(name, 'i');
@@ -58,16 +72,24 @@ server.get('/api/items/search', async (req, res) => {
             query.category = category;
         }
         if (minPrice) {
-            query.price = { $gte: parseFloat(minPrice) };
+            query.price = {
+                $gte: parseFloat(minPrice) // gte = >=
+            };
         }
         if (maxPrice) {
-            query.price = { ...query.price, $lte: parseFloat(maxPrice) };
+            query.price = {
+                ...query.price,
+                $lte: parseFloat(maxPrice) // lte is not sim lol its <=
+            };
         }
+        // console.log(query);
         const items = await Item.find(query);
 
         res.status(200).json(items);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({
+            message: err.message
+        });
     }
 });
 
@@ -75,12 +97,20 @@ server.get('/api/items/low-stock', async (req, res) => {
     try {
         const threshold = parseInt(req.query.threshold);
         if (isNaN(threshold)) {
-            return res.status(400).json({ message: 'Invalid threshold value' });
+            return res.status(400).json({
+                message: 'Invalid threshold value'
+            });
         }
-        const items = await Item.find({ quantity: { $lt: threshold } });
+        const items = await Item.find({
+            quantity: {
+                $lt: threshold // funny mongodb operators (i wanna die)
+            }
+        });
         res.status(200).json(items);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({
+            message: err.message
+        });
     }
 });
 
