@@ -82,4 +82,4 @@ Contributions are welcome! Please open an issue or submit a pull request with an
 This project is licensed under the MIT License.
 
 #### Closing thoughts
-Thank you [SanelRyan](https://github.com/SanelRyan/) for this project idea and pls give me 5 stars⭐
+Thank you [SanelRyan](https://github.com/SanelRyan/) for this project idea and pls give me 5 stars⭐ and dont sue me for bad code
